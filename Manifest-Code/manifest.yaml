@@ -49,14 +49,14 @@ metadata:
   name: mysql
 spec:
   selector:
-    matchLabels:
-      app: mysql
+    matchLabels:     #match pod name with kind:deployment
+      app: mysql     #pod name
   strategy:
-    type: Recreate
+    type: Recreate     #if pod crash
   template:
     metadata:
       labels:
-        app: mysql
+        app: mysql     #pod name
     spec:
       containers:
       - image: mysql:8
@@ -97,10 +97,10 @@ metadata:
   name: mysql-service
 spec:
   ports:
-  - port: 3306
-    targetPort: 3306
+  - port: 3306     #service port
+    targetPort: 3306     #sql db port-container
   selector:
-    app: mysql
+    app: mysql # pod name
 ---
 # BankApp Deployment
 apiVersion: apps/v1
@@ -131,7 +131,7 @@ spec:
         - containerPort: 8080
         env:
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://mysql-service:3306/bankappdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+          value: jdbc:mysql://mysql-service:3306/bankappdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true     #get from application properties file
         - name: SPRING_DATASOURCE_USERNAME
           value: root
         - name: SPRING_DATASOURCE_PASSWORD
